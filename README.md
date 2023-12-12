@@ -1,4 +1,4 @@
-# Spending Graphs
+# Bank Balance Graph
 
 Plotting balance over time with Starling Bank's [CSV export](https://www.starlingbank.com/features/statements/).
 
