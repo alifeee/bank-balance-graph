@@ -24,3 +24,5 @@ python .\plot.py --trendline 90 .\StarlingStatement_2022-05-26_2023-05-26.csv .\
 ## Notes
 
 This could work with other banks. I don't know, because I don't have other banks. In principle, if their CSVs have a "date" and "balance" column then it will work. You will have to change this code to use the right CSV column and date format.
+
+https://github.com/alifeee/banking/blob/7e4bc1468165685d85f38c9d2ab1037f24209ce2/plot.py#L32-L33
