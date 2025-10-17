@@ -87,8 +87,21 @@ plt.plot(
     "--",
     alpha=0.5,
     zorder=1,
-    label=f"{args.trendline} day trend\n£{trendline[0]:.2f} per day\nZero in {days_until_zero.days} days\n  on {zero_crossing.strftime('%d/%m/%Y')}",
+    label=f"{args.trendline} day trend\n£{trendline[0]:.2f} per day\n"
+    f"Zero in {days_until_zero.days} days\n  on {zero_crossing.strftime('%d/%m/%Y')}",
 )
+
+# line on each new year
+plotdates = [
+    datetime.datetime(yr, 1, 1)
+    for yr in range(
+        int(min(times).strftime("%Y")) + 1,
+        int(max(times).strftime("%Y")) + 1,
+    )
+]
+plt.vlines(plotdates, 0, 2000, "gray", "--")
+
+
 plt.xlabel("Time")
 plt.ylabel("Balance")
 plt.title("Balance over time")
@@ -96,5 +109,5 @@ plt.ylim(bottom=0)
 plt.xlim(right=datetime.datetime.now() + datetime.timedelta(days=90))
 plt.grid(True, axis="y", lw=0.5, zorder=0)
 plt.axvline(datetime.datetime.now(), color="k", linestyle="--", zorder=1)
-plt.legend()
+plt.legend(loc="upper left")
 plt.show()
