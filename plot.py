@@ -1,8 +1,10 @@
 """plot spending using Starling's CSV export
 allows multiple files (appended) as Starling's maximum export is 1 year of data
 """
+
 import argparse
 import csv
+import re
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib
@@ -24,13 +26,19 @@ args = parser.parse_args()
 
 times: datetime.datetime = []
 balances: float = []
+lost_money = 0.0  # keep track of money moved into/out of saving spaces
 for i in args.files:
     with open(i, newline="", encoding="unicode_escape") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
+            # Starling bank does not include money in saving zones in statements,
+            #   so keep track of when it is transferred here and re-add/subtract it
+            if re.match(r"Transfer (from|into) (Easy Saver|Cash ISA)", row[2]):
+                print("got saving transfer: ", row)
+                lost_money -= float(row[4])
             times.append(datetime.datetime.strptime(row[0], "%d/%m/%Y"))
-            balances.append(float(row[5]))
+            balances.append(float(row[5]) + lost_money)
 
 # data for trendline
 times_trend = []
